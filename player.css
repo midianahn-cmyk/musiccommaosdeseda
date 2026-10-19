@@ -1,0 +1,199 @@
+
+/* =====================================================
+   PLAYER DE MÚSICA PARA BLOGGER
+   Criadora: Com Mãos de Seda
+   Site: https://www.commaosdesedaoficial.com
+   © 2026 Com Mãos de Seda
+   Arquivo: player.css
+   ===================================================== */
+
+#player {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 48px;
+  min-height: 38px;
+  max-height: 48px;
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
+    url("https://img.magnific.com/premium-photo/birthday-background-copy-space_1036998-318769.jpg")
+    center / cover no-repeat;
+
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 5px 10px;
+  color: white;
+  font-family: 'Merienda', sans-serif;
+  z-index: 99999 !important;
+  box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  justify-content: space-between;
+}
+
+#player * {
+  box-sizing: border-box;
+}
+
+#player #trackNameContainer {
+  flex: 3;
+  min-width: 0;
+  overflow: hidden;
+}
+
+#player #trackName {
+  display: inline-block;
+  white-space: nowrap;
+  font-weight: bold;
+  font-size: 12.8px;
+  animation: playerScrollPingPong 18s linear infinite alternate;
+  color: black;
+  line-height: 1;
+}
+
+#player button {
+  background: transparent;
+  border: none;
+  color: black;
+  font-family: inherit;
+  font-size: 17px;
+  padding: 3px 5px;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+  flex-shrink: 0;
+}
+
+#player button:hover {
+  color: pink;
+  transform: scale(1.18);
+}
+
+#player .drag-handle {
+  cursor: grab;
+  font-size: 17px;
+  padding: 3px 6px;
+  color: black;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+#player .drag-handle:active {
+  cursor: grabbing;
+}
+
+#player .music-icon {
+  font-size: 14px;
+  color: transparent;
+  flex-shrink: 0;
+}
+
+#player .controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+#player input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  min-width: 35px;
+  background: linear-gradient(90deg, #61ff4c, #ff6ec4, #ffffff);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#player input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border: 2px solid #ff69b4;
+  border-radius: 50%;
+}
+
+#player input[type="range"]::-moz-range-thumb {
+  width: 9px;
+  height: 9px;
+  background: white;
+  border: 2px solid #ff69b4;
+  border-radius: 50%;
+}
+
+#player .credit {
+  font-size: 10.5px;
+  white-space: nowrap;
+  text-decoration: none;
+  background: linear-gradient(90deg, #61ff4c, #ff6ec4, #000000);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#player .right-area {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding-right: 50px;
+  min-width: 0;
+}
+
+@keyframes playerScrollPingPong {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 768px) {
+  #player {
+    height: 42px;
+    min-height: 42px;
+    gap: 4px;
+    padding: 5px 6px;
+    justify-content: center;
+  }
+
+  #player #trackNameContainer,
+  #player .right-area,
+  #player .drag-handle,
+  #player #closeBtn,
+  #player .music-icon {
+    display: none;
+  }
+
+  #player .controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  #player button {
+    font-size: 22px;
+    padding: 4px 8px;
+  }
+}
+
+/* Telas muito estreitas */
+@media (max-width: 360px) {
+  #player .controls {
+    gap: 5px;
+  }
+
+  #player button {
+    font-size: 19px;
+    padding: 4px 6px;
+  }
+}
