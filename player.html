@@ -1,0 +1,65 @@
+
+<!--
+==================================================
+PLAYER DE MÚSICA PARA BLOGGER
+Criadora: Com Mãos de Seda
+Site: https://www.commaosdesedaoficial.com
+© 2026 Com Mãos de Seda
+Arquivo: player.html
+==================================================
+-->
+
+<div id="player">
+  <button id="closeBtn" type="button"
+          aria-label="Fechar player" title="Fechar">
+    ×
+  </button>
+
+  <div class="drag-handle" id="dragHandle"
+       title="Arrastar player" aria-label="Arrastar player">
+    ↕
+  </div>
+
+  <div class="music-icon" aria-hidden="true">♫</div>
+
+  <div class="controls">
+    <button id="prev" type="button" aria-label="Música anterior">⏮</button>
+    <button id="play" type="button" aria-label="Reproduzir">▶</button>
+    <button id="pause" type="button" aria-label="Pausar">⏸</button>
+    <button id="next" type="button" aria-label="Próxima música">⏭</button>
+    <button id="stop" type="button" aria-label="Parar">⏹</button>
+  </div>
+
+  <div class="music-icon" aria-hidden="true">♫</div>
+
+  <div id="trackNameContainer">
+    <div id="trackName">Música carregando...</div>
+  </div>
+
+  <div class="right-area">
+    <a class="credit"
+       href="https://www.commaosdesedaoficial.com/2024/10/AudioPlayInfinito.html"
+       target="_blank"
+       rel="noopener noreferrer">
+      🎵 Faça seu Play Gratuito agora!
+    </a>
+
+    <input class="volume"
+           id="volume"
+           type="range"
+           min="0"
+           max="1"
+           step="0.01"
+           value="0.07"
+           aria-label="Volume da música">
+
+    <input id="progress"
+           type="range"
+           min="0"
+           max="100"
+           value="0"
+           aria-label="Progresso da música">
+  </div>
+</div>
+
+<audio id="audio" preload="metadata"></audio>
