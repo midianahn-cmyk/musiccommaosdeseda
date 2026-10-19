@@ -1,319 +1,464 @@
-<!-- 🎵🎵🎵🎵🎵🎵🎵 Player Blogger INÍCIO -->
-<style>
-#player {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  height: 38px;
-  max-height: 48px;
-  background:
-    linear-gradient(rgba(0,0,0,0.0), rgba(0,0,0,0.0)),
-    url(&quot;https://img.magnific.com/premium-photo/birthday-background-copy-space_1036998-318769.jpg&quot;) center/cover no-repeat;
-  border-top: 2px solid rgba(255,255,255,0.3);
-  padding: 5px 10px;
-  color: white;
-  font-family: &#39;Merienda&#39;, sans-serif;
-  z-index: 99999 !important;
-  box-shadow: 0 -3px 12px rgba(0,0,0,0.4);
-  overflow: hidden;
-  justify-content: space-between;
-}
-#player #trackNameContainer {
-  flex: 3;
-  min-width: 0;
-  overflow: hidden;
-}
-#player #trackName {
-  display: inline-block;
-  white-space: nowrap;
-  font-weight: bold;
-  font-size: 12.8px;
-  animation: scrollPingPong 18s linear infinite alternate;
-  color: black;
-  line-height: 1;
-}
-#player button {
-  background: transparent;
-  border: none;
-  color: black;
-  font-size: 17px;
-  padding: 3px 5px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-#player button:hover {
-  color: pink;
-  transform: scale(1.18);
-  font-size: 17px;
-}
-#player .drag-handle {
-  cursor: grab;
-  font-size: 17px;
-  padding: 3px 6px;
-}
-#player input[type=&quot;range&quot;] {
-  -webkit-appearance: none;
-  height: 4px;
-  background: linear-gradient(90deg,#61ff4c,#ff6ec4,#ffffff);
-  border-radius: 5px;
-}
-#player input[type=&quot;range&quot;]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  background: white;
-  border: 2px solid #ff69b4;
-  border-radius: 50%;
-}
-#player .credit {
-  font-size: 10.5px;
-  white-space: nowrap;
-  background: linear-gradient(90deg,#61ff4c,#ff6ec4,#000000);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-#player .right-area {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-left: auto;
-  padding-right: 50px;
-}
-@keyframes scrollPingPong {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-@media (max-width: 768px) {
-  #player {
-    height: 42px;
-    gap: 4px;
-    padding: 5px 6px;
-  }
-  #player #trackNameContainer {
-    min-width: 80px;
-  }
-  #player .credit {
-    display: none;
-  }
-  #player #volume,
-  #player #progress {
-    width: 60px;
-  }
-}
-@media (max-width: 768px) {
-  #player #trackNameContainer,
-  #player .right-area,
-  #player .drag-handle,
-  #player #closeBtn {
-    display: none;
-  }
-  #player {
-    justify-content: center;
-    height: 42px;
-    padding: 5px;
-  }
-  #player .controls {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-  }
-  #player button {
-    font-size: 22px;
-    padding: 4px 8px;
-  }
-}
-</style>
 
-<div id='player'>
-  <button id='closeBtn'><i class='fa fa-close'/></button>
-  <div class='drag-handle' id='dragHandle'><i class='fa fa-arrows-alt'/></div>
+/* =====================================================
+   PLAYER DE MÚSICA PARA BLOGGER
+   Criadora: Com Mãos de Seda
+   © 2026 Com Mãos de Seda
+   ===================================================== */
 
-  <div><i class='fa fa-music' style='font-size:14px;color:transparent'/></div>
+(function () {
+  'use strict';
 
-  <div class='controls'>
-    <button id='prev'>&#9198;</button>
-    <button id='play'>&#9654;</button>
-    <button id='pause'>&#9208;</button>
-    <button id='next'>&#9197;</button>
-    <button id='stop'>&#9209;</button>
-  </div>
+  // Evita criar o player duas vezes
+  if (document.getElementById('player')) return;
 
-  <div><i class='fa fa-music' style='font-size:14px;color:transparent'/></div>
+  function iniciarPlayer() {
+    if (!document.body || document.getElementById('player')) return;
 
-  <div id='trackNameContainer'>
-    <div id='trackName'>Música Carregando...</div>
-  </div>
+    const playlist = [
+      {
+        title: '🎵🎵🎵🎵🎵 Música: Halloween Background Music!',
+        src: 'https://cdn.pixabay.com/download/audio/2025/10/25/audio_4c93605c85.mp3'
+      },
+      {
+        title: '🎵🎵🎵🎵🎵 Música: Scary Halloween!',
+        src: 'https://cdn.pixabay.com/download/audio/2026/10/07/audio_2acf8121d9.mp3'
+      },
+      {
+        title: '🎵🎵🎵🎵🎵 Música: Haunted Halloween!',
+        src: 'https://cdn.pixabay.com/download/audio/2026/10/07/audio_ec04afa464.mp3'
+      },
+      {
+        title: "🎵🎵🎵🎵🎵 Música: Mystical Halloween's!",
+        src: 'https://cdn.pixabay.com/download/audio/2023/05/25/audio_705b820a4d.mp3'
+      },
+      {
+        title: '🎵🎵🎵🎵🎵 Música: Halloween Party!',
+        src: 'https://cdn.pixabay.com/download/audio/2026/10/08/audio_a04ff34238.mp3'
+      },
+      {
+        title: '🎵🎵🎵🎵🎵 Música: Happy Halloween!',
+        src: 'https://cdn.pixabay.com/download/audio/2026/09/29/audio_17f34a0473.mp3'
+      }
+    ];
 
-  <div class='right-area'>
-    <a class='credit' href='https://www.commaosdesedaoficial.com/2024/10/AudioPlayInfinito.html' target='_blank'>🎵 Faça seu Play Gratuito agora!</a>
-    <div><i class='fa fa-music' style='font-size:14px;color:transparent'/></div>
-    <input class='volume' id='volume' max='1' min='0' step='0.01' type='range' value='0.07'/>
-    <input id='progress' max='100' min='0' type='range' value='0'/>
-  </div>
-</div>
+    // Armazenamento seguro
+    function ler(chave, padrao) {
+      try {
+        const valor = localStorage.getItem(chave);
+        return valor === null ? padrao : valor;
+      } catch (e) {
+        return padrao;
+      }
+    }
 
-<audio id='audio'/>
+    function gravar(chave, valor) {
+      try {
+        localStorage.setItem(chave, valor);
+      } catch (e) {}
+    }
 
-<script>
-/* === PLAYER COMPLETO - 24 HORAS + AUTO PLAY CONTROLADO === */
-const player = document.getElementById(&#39;player&#39;);
-const audio = document.getElementById(&#39;audio&#39;);
-const playBtn = document.getElementById(&#39;play&#39;);
-const pauseBtn = document.getElementById(&#39;pause&#39;);
-const stopBtn = document.getElementById(&#39;stop&#39;);
-const nextBtn = document.getElementById(&#39;next&#39;);
-const prevBtn = document.getElementById(&#39;prev&#39;);
-const volumeSlider = document.getElementById(&#39;volume&#39;);
-const progress = document.getElementById(&#39;progress&#39;);
-const dragHandle = document.getElementById(&#39;dragHandle&#39;);
-const closeBtn = document.getElementById(&#39;closeBtn&#39;);
-const trackName = document.getElementById(&#39;trackName&#39;);
+    const numeroSalvo = parseInt(ler('playerCur', '0'), 10);
+    let cur = Number.isFinite(numeroSalvo)
+      ? Math.max(0, Math.min(numeroSalvo, playlist.length - 1))
+      : 0;
 
-// ===== ESCONDER O PLAYER POR 24 HORAS =====
-const hideUntil = parseInt(localStorage.getItem(&#39;playerHideUntil&#39;)) || 0;
-if (Date.now() &lt; hideUntil) {
-  player.style.display = &#39;none&#39;;
-}
+    let savedTime = Math.max(0, parseFloat(ler('playerTime', '0')) || 0);
+    let savedVolume = parseFloat(ler('playerVol', '0.07'));
 
+    if (!Number.isFinite(savedVolume)) savedVolume = 0.07;
+    savedVolume = Math.max(0, Math.min(1, savedVolume));
 
-const playlist = [
-  {
-    title: &#39;🎵🎵🎵🎵🎵 Música: Halloween Background Music!&#39;,
-    src: &#39;https://cdn.pixabay.com/download/audio/2025/10/25/audio_4c93605c85.mp3&#39;
-  },
-  {
-    title: &#39;🎵🎵🎵🎵🎵 Música: Scary Halloween!&#39;,
-    src: &#39;https://cdn.pixabay.com/download/audio/2026/10/07/audio_2acf8121d9.mp3&#39;
-  },
-  {
-    title: &#39;🎵🎵🎵🎵🎵 Música: Haunted Halloween!&#39;,
-    src: &#39;https://cdn.pixabay.com/download/audio/2026/10/07/audio_ec04afa464.mp3&#39;
-  },
-  {
-    title: &quot;🎵🎵🎵🎵🎵 Música: Mystical Halloween&#39;s!&quot;,
-    src: &#39;https://cdn.pixabay.com/download/audio/2023/05/25/audio_705b820a4d.mp3&#39;
-  },
-  {
-    title: &#39;🎵🎵🎵🎵🎵 Música: Halloween Party!&#39;,
-    src: &#39;https://cdn.pixabay.com/download/audio/2026/10/08/audio_a04ff34238.mp3&#39;
-  },
-  {
-    title: &#39;🎵🎵🎵🎵🎵 Música: Happy Halloween!&#39;,
-    src: &#39;https://cdn.pixabay.com/download/audio/2026/09/29/audio_17f34a0473.mp3&#39;
-  }
-];
+    // CSS criado pelo próprio JavaScript
+    const style = document.createElement('style');
+    style.textContent = `
+      #player {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        height: 48px;
+        background:
+          linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)),
+          url("https://img.magnific.com/premium-photo/birthday-background-copy-space_1036998-318769.jpg")
+          center/cover no-repeat;
+        border-top: 2px solid rgba(255,255,255,.3);
+        padding: 5px 10px;
+        color: white;
+        font-family: Merienda, sans-serif;
+        z-index: 2147483000;
+        box-shadow: 0 -3px 12px rgba(0,0,0,.4);
+        overflow: hidden;
+        justify-content: space-between;
+      }
 
+      #player * { box-sizing: border-box; }
 
-let cur = parseInt(localStorage.getItem(&#39;playerCur&#39;)) || 0;
-let savedTime = parseFloat(localStorage.getItem(&#39;playerTime&#39;)) || 0;
-let savedVolume = parseFloat(localStorage.getItem(&#39;playerVol&#39;)) || 0.07;
+      #player button {
+        background: transparent;
+        border: none;
+        color: black;
+        font-size: 17px;
+        line-height: 1;
+        padding: 5px;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
 
-audio.src = playlist[cur].src;
-audio.load();
-trackName.textContent = playlist[cur].title;
-audio.volume = savedVolume;
-audio.currentTime = savedTime;
+      #player button:hover {
+        color: #ff69b4;
+      }
 
-function updateTrack() {
-  audio.src = playlist[cur].src;
-  audio.load();
-  audio.currentTime = 0;
-  audio.play().catch(function() {});
-  trackName.textContent = playlist[cur].title;
-}
+      #player button:focus-visible {
+        outline: 2px solid #ff69b4;
+        outline-offset: 2px;
+      }
 
-function saveState() {
-  localStorage.setItem(&#39;playerCur&#39;, cur);
-  localStorage.setItem(&#39;playerTime&#39;, audio.currentTime);
-  localStorage.setItem(&#39;playerVol&#39;, audio.volume);
-}
+      #player .drag-handle {
+        cursor: grab;
+        font-size: 17px;
+        padding: 5px;
+        flex-shrink: 0;
+        user-select: none;
+      }
 
-playBtn.onclick = function() { audio.play().catch(function() {}); };
-pauseBtn.onclick = function() { audio.pause(); };
-stopBtn.onclick = function() { audio.pause(); audio.currentTime = 0; saveState(); };
-nextBtn.onclick = function() { cur = (cur + 1) % playlist.length; updateTrack(); saveState(); };
-prevBtn.onclick = function() { cur = (cur - 1 + playlist.length) % playlist.length; updateTrack(); saveState(); };
-volumeSlider.oninput = function() { audio.volume = volumeSlider.value; saveState(); };
+      #player #trackNameContainer {
+        flex: 3;
+        min-width: 0;
+        overflow: hidden;
+      }
 
-audio.addEventListener(&#39;timeupdate&#39;, function() {
-  if (audio.duration) progress.value = (audio.currentTime / audio.duration) * 100;
-  saveState();
-});
+      #player #trackName {
+        display: inline-block;
+        white-space: nowrap;
+        font-weight: bold;
+        font-size: 12.8px;
+        line-height: 1;
+        color: black;
+        animation: scrollPingPong 18s linear infinite alternate;
+      }
 
-progress.addEventListener(&#39;input&#39;, function() {
-  if (audio.duration) audio.currentTime = (progress.value / 100) * audio.duration;
-  saveState();
-});
+      #player .controls {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        flex-shrink: 0;
+      }
 
-// ===== BOTÃO FECHAR - ESCONDE POR 24 HORAS =====
-closeBtn.onclick = function() {
-  player.style.display = &#39;none&#39;;
-  audio.pause(); // para a música imediatamente
-  localStorage.setItem(&#39;playerHideUntil&#39;, Date.now() + 24 * 60 * 60 * 1000);
-};
+      #player .right-area {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-left: auto;
+        padding-right: 50px;
+        flex-shrink: 0;
+      }
 
-// Drag
-let isDrag = false, dx, dy;
-const startDrag = function(e) {
-  isDrag = true;
-  const r = player.getBoundingClientRect();
-  const cx = e.touches ? e.touches[0].clientX : e.clientX;
-  const cy = e.touches ? e.touches[0].clientY : e.clientY;
-  dx = cx - r.left;
-  dy = cy - r.top;
-  e.preventDefault();
-};
-const onDrag = function(e) {
-  if (!isDrag) return;
-  const cx = e.touches ? e.touches[0].clientX : e.clientX;
-  const cy = e.touches ? e.touches[0].clientY : e.clientY;
-  let x = cx - dx, y = cy - dy;
-  const maxX = window.innerWidth - player.offsetWidth;
-  const maxY = window.innerHeight - player.offsetHeight;
-  x = Math.min(Math.max(0, x), maxX);
-  y = Math.min(Math.max(0, y), maxY);
-  player.style.left = x + &#39;px&#39;;
-  player.style.top = y + &#39;px&#39;;
-  player.style.bottom = &#39;auto&#39;;
-};
-dragHandle.addEventListener(&#39;mousedown&#39;, startDrag);
-dragHandle.addEventListener(&#39;touchstart&#39;, startDrag);
-document.addEventListener(&#39;mouseup&#39;, function() { isDrag = false; });
-document.addEventListener(&#39;touchend&#39;, function() { isDrag = false; });
-document.addEventListener(&#39;mousemove&#39;, onDrag);
-document.addEventListener(&#39;touchmove&#39;, onDrag);
+      #player .credit {
+        font-size: 10.5px;
+        white-space: nowrap;
+        background: linear-gradient(90deg,#61ff4c,#ff6ec4,#000);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-decoration: none;
+      }
 
-audio.addEventListener(&#39;ended&#39;, function() {
-  cur = (cur + 1) % playlist.length;
-  updateTrack();
-  saveState();
-});
+      #player input[type="range"] {
+        width: 75px;
+        min-width: 35px;
+        height: 4px;
+        padding: 0;
+        cursor: pointer;
+        accent-color: #ff69b4;
+      }
 
-// ===== AUTO PLAY APÓS PRIMEIRA INTERAÇÃO =====
-function iniciarAudio() {
-  // Se estiver dentro das 24 horas de fechado, não toca
-  const hideUntil = parseInt(localStorage.getItem(&#39;playerHideUntil&#39;)) || 0;
-  if (Date.now() &lt; hideUntil) return;
+      #player #audio {
+        display: none;
+      }
 
-  audio.load();
-  const promessa = audio.play();
-  if (promessa !== undefined) {
-    promessa
-      .then(function() {
-        console.log(&#39;Áudio iniciado&#39;);
-      })
-      .catch(function(err) {
-        console.log(&#39;Autoplay bloqueado:&#39;, err);
+      @keyframes scrollPingPong {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+
+      @media (max-width: 768px) {
+        #player {
+          height: 48px;
+          gap: 4px;
+          padding: 5px;
+          justify-content: center;
+        }
+
+        #player #trackNameContainer,
+        #player .right-area,
+        #player .drag-handle,
+        #player #closeBtn {
+          display: none;
+        }
+
+        #player .controls {
+          gap: 10px;
+        }
+
+        #player button {
+          font-size: 22px;
+          padding: 5px 8px;
+        }
+      }
+    `;
+
+    document.head.appendChild(style);
+
+    // O HTML do player é criado automaticamente
+    const player = document.createElement('div');
+    player.id = 'player';
+
+    player.innerHTML = `
+      <button id="closeBtn" type="button"
+        aria-label="Fechar player" title="Fechar por 24 horas">×</button>
+
+      <div class="drag-handle" id="dragHandle"
+        title="Arraste para mover" aria-label="Mover player">⠿</div>
+
+      <span aria-hidden="true" style="color:transparent">♫</span>
+
+      <div class="controls">
+        <button id="prev" type="button" aria-label="Música anterior">⏮</button>
+        <button id="play" type="button" aria-label="Reproduzir">▶</button>
+        <button id="pause" type="button" aria-label="Pausar">⏸</button>
+        <button id="next" type="button" aria-label="Próxima música">⏭</button>
+        <button id="stop" type="button" aria-label="Parar">⏹</button>
+      </div>
+
+      <span aria-hidden="true" style="color:transparent">♫</span>
+
+      <div id="trackNameContainer">
+        <div id="trackName">Música carregando...</div>
+      </div>
+
+      <div class="right-area">
+        <a class="credit"
+          href="https://www.commaosdesedaoficial.com/2024/10/AudioPlayInfinito.html"
+          target="_blank" rel="noopener noreferrer">
+          🎵 Faça seu Play Gratuito agora!
+        </a>
+        <input id="volume" type="range" min="0" max="1"
+          step="0.01" value="0.07" aria-label="Volume">
+        <input id="progress" type="range" min="0" max="100"
+          step="0.1" value="0" aria-label="Progresso da música">
+      </div>
+    `;
+
+    document.body.appendChild(player);
+
+    const audio = document.createElement('audio');
+    audio.id = 'audio';
+    audio.preload = 'metadata';
+    player.appendChild(audio);
+
+    const $ = id => player.querySelector('#' + id);
+
+    const playBtn = $('play');
+    const pauseBtn = $('pause');
+    const stopBtn = $('stop');
+    const nextBtn = $('next');
+    const prevBtn = $('prev');
+    const volumeSlider = $('volume');
+    const progress = $('progress');
+    const dragHandle = $('dragHandle');
+    const closeBtn = $('closeBtn');
+    const trackName = $('trackName');
+
+    audio.volume = savedVolume;
+    volumeSlider.value = String(savedVolume);
+
+    function ocultoPor24Horas() {
+      const hideUntil = parseInt(ler('playerHideUntil', '0'), 10) || 0;
+      return Date.now() < hideUntil;
+    }
+
+    if (ocultoPor24Horas()) {
+      player.style.display = 'none';
+    }
+
+    function salvarEstado() {
+      gravar('playerCur', String(cur));
+      gravar('playerTime', String(audio.currentTime || 0));
+      gravar('playerVol', String(audio.volume));
+    }
+
+    function carregarMusica(tocar, zerarTempo) {
+      audio.src = playlist[cur].src;
+      trackName.textContent = playlist[cur].title;
+      progress.value = 0;
+      audio.load();
+
+      if (!zerarTempo && savedTime > 0) {
+        const tempo = savedTime;
+        savedTime = 0;
+
+        audio.addEventListener('loadedmetadata', function restaurar() {
+          audio.removeEventListener('loadedmetadata', restaurar);
+
+          if (Number.isFinite(audio.duration)) {
+            audio.currentTime = Math.min(tempo, audio.duration);
+          }
+
+          if (tocar) {
+            audio.play().catch(function () {});
+          }
+        });
+      } else if (tocar) {
+        audio.play().catch(function () {});
+      }
+    }
+
+    playBtn.addEventListener('click', function () {
+      if (audio.ended) audio.currentTime = 0;
+      audio.play().catch(function () {});
+    });
+
+    pauseBtn.addEventListener('click', function () {
+      audio.pause();
+      salvarEstado();
+    });
+
+    stopBtn.addEventListener('click', function () {
+      audio.pause();
+      audio.currentTime = 0;
+      progress.value = 0;
+      salvarEstado();
+    });
+
+    nextBtn.addEventListener('click', function () {
+      cur = (cur + 1) % playlist.length;
+      savedTime = 0;
+      carregarMusica(true, true);
+      salvarEstado();
+    });
+
+    prevBtn.addEventListener('click', function () {
+      cur = (cur - 1 + playlist.length) % playlist.length;
+      savedTime = 0;
+      carregarMusica(true, true);
+      salvarEstado();
+    });
+
+    volumeSlider.addEventListener('input', function () {
+      audio.volume = Number(volumeSlider.value);
+      salvarEstado();
+    });
+
+    audio.addEventListener('timeupdate', function () {
+      if (Number.isFinite(audio.duration) && audio.duration > 0) {
+        progress.value = String(
+          (audio.currentTime / audio.duration) * 100
+        );
+      }
+      salvarEstado();
+    });
+
+    progress.addEventListener('input', function () {
+      if (Number.isFinite(audio.duration) && audio.duration > 0) {
+        audio.currentTime =
+          (Number(progress.value) / 100) * audio.duration;
+      }
+    });
+
+    closeBtn.addEventListener('click', function () {
+      audio.pause();
+      player.style.display = 'none';
+      gravar('playerHideUntil', String(Date.now() + 86400000));
+    });
+
+    // Arrastar o player com o mouse ou toque
+    let arrastando = false;
+    let dx = 0;
+    let dy = 0;
+
+    dragHandle.addEventListener('pointerdown', function (e) {
+      if (e.button !== undefined && e.button !== 0) return;
+
+      arrastando = true;
+      const r = player.getBoundingClientRect();
+      dx = e.clientX - r.left;
+      dy = e.clientY - r.top;
+
+      player.style.left = r.left + 'px';
+      player.style.top = r.top + 'px';
+      player.style.right = 'auto';
+      player.style.bottom = 'auto';
+
+      try {
+        dragHandle.setPointerCapture(e.pointerId);
+      } catch (err) {}
+
+      e.preventDefault();
+    });
+
+    dragHandle.addEventListener('pointermove', function (e) {
+      if (!arrastando) return;
+
+      const maxX = window.innerWidth - player.offsetWidth;
+      const maxY = window.innerHeight - player.offsetHeight;
+
+      const x = Math.max(0, Math.min(e.clientX - dx, maxX));
+      const y = Math.max(0, Math.min(e.clientY - dy, maxY));
+
+      player.style.left = x + 'px';
+      player.style.top = y + 'px';
+    });
+
+    function pararArraste() {
+      arrastando = false;
+    }
+
+    dragHandle.addEventListener('pointerup', pararArraste);
+    dragHandle.addEventListener('pointercancel', pararArraste);
+
+    audio.addEventListener('ended', function () {
+      cur = (cur + 1) % playlist.length;
+      savedTime = 0;
+      carregarMusica(true, true);
+      salvarEstado();
+    });
+
+    // O navegador pode bloquear reprodução automática.
+    // A reprodução é tentada após a primeira interação.
+    let primeiraInteracao = false;
+
+    function iniciarAudio() {
+      if (primeiraInteracao) return;
+      primeiraInteracao = true;
+
+      if (ocultoPor24Horas()) return;
+
+      audio.play().catch(function () {
+        // O usuário ainda pode apertar o botão Play.
       });
+    }
+
+    document.addEventListener('pointerdown', iniciarAudio, {
+      once: true,
+      passive: true
+    });
+
+    document.addEventListener('keydown', iniciarAudio, {
+      once: true
+    });
+
+    carregarMusica(false, false);
   }
-}
-document.addEventListener(&#39;pointerdown&#39;, iniciarAudio, {once: true});
-document.addEventListener(&#39;click&#39;, iniciarAudio, {once: true});
-document.addEventListener(&#39;touchstart&#39;, iniciarAudio, {once: true});
-document.addEventListener(&#39;keydown&#39;, iniciarAudio, {once: true});
-</script>
-<!-- 🎵🎵🎵🎵🎵🎵🎵 Player Blogger FINAL -->
+
+  if (document.body) {
+    iniciarPlayer();
+  } else {
+    document.addEventListener('DOMContentLoaded', iniciarPlayer, {
+      once: true
+    });
+  }
+})();
